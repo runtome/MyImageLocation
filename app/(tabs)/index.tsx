@@ -1,7 +1,9 @@
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 
 export default function HomeScreen() {
   return (
-    <Text>Hello</Text>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign : 'center' }}>Hello</Text>
+    </View>
   );
 }
