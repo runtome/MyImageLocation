@@ -1,8 +1,9 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
+import { router, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
+import IconButton from '@/components/ui/IconButton';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
 export const unstable_settings = {
@@ -19,7 +20,18 @@ export default function RootLayout() {
           name="(screens)/AllPlace" 
           options={{ 
             headerShown: true, 
-            title: 'All Places' 
+            title: 'All Places', 
+            headerRight: ({ tintColor }) => (
+              <IconButton
+                icon="add"
+                size={24}
+                color={tintColor || 'black'}
+                onPress={() => {
+                  // Navigate to AddPlace screen
+                  router.push('/AddPlace');
+                }}
+              />
+            ),  
           }} 
         />
         <Stack.Screen 
