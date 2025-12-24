@@ -6,7 +6,7 @@ import PlaceItem from "./PlaceItem";
 
 export default function PlacesList({places}: {places: Place[]}) {
 
-  if (places.length === 0) {
+  if (!places || places.length === 0) {
     return( 
     <View style={styles.fallbackContainer}>
       <Text style={styles.fallbackText}>No places added yet. - Start adding some!</Text>

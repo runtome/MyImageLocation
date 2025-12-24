@@ -1,7 +1,7 @@
-import PlacesList from "@/components/Places/PlacesList";
-import { Place } from "@/models/place";
+import PlaceForm from "@/components/Places/PlaceForm";
 
 
-export default function AllPlaceScreen({places}: {places: Place[]}) {
-  return <PlacesList places={places} />;
+
+export default function AddPlace() {
+  return <PlaceForm />;
 }
