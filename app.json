@@ -53,6 +53,13 @@
           "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
           "recordAudioAndroid": true
         }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to access your location at all times.",
+          "locationWhenInUsePermission": "Allow $(PRODUCT_NAME) to access your location while you are using the app."
+        }
       ]
     ],
     "experiments": {
