@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
 import IconButton from '@/components/ui/IconButton';
+import { Colors } from '@/constants/colors';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
 export const unstable_settings = {
@@ -15,7 +16,13 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
+      <Stack 
+        screenOptions={{
+          headerStyle: { backgroundColor: Colors.primary500 },
+          headerTintColor: Colors.gray700,
+          contentStyle: { backgroundColor: Colors.gray700 },
+
+      }}>
         <Stack.Screen 
           name="(screens)/AllPlace" 
           options={{ 
@@ -36,7 +43,9 @@ export default function RootLayout() {
         />
         <Stack.Screen 
           name="(screens)/AddPlace" 
-          options={{ title: 'Add New Place' }} 
+          options={{ 
+            title: 'Add New Place' 
+          }} 
         />
       </Stack>
       <StatusBar style="auto" />
