@@ -5,8 +5,15 @@ import { Colors } from "@/constants/colors";
 import ImagePicker from "../Places/ImagePicker";
 import LocationPicker from "./LocationPicker";
 
-export default function PlaceForm() {
+interface PlaceFormProps {
+  latitude?: number;
+  longitude?: number;
+}
+
+export default function PlaceForm({ latitude, longitude }: PlaceFormProps) {
   const [enteredTitle, setEnteredTitle] = useState('');
+
+  console.log('Received coordinates:', latitude, longitude);
 
   function changeTitleHandler(enteredText: string) {
     setEnteredTitle(enteredText);

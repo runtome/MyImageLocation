@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import IconButton from '@/components/ui/IconButton';
+import { router, useNavigation } from 'expo-router';
+import { useCallback, useLayoutEffect, useState } from 'react';
+import { Alert, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
-
-
-export default function Map() {
+export default function MapScreen() {
+  const navigation = useNavigation();
   const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number }>();
 
   const region = {
@@ -15,20 +16,54 @@ export default function Map() {
   };
 
   function selectLocationHandler(event: any) {
-    const lat = event.nativeEvent.coordinate.latitude;
-    const lng = event.nativeEvent.coordinate.longitude;
-    console.log(lat, lng);
-    setSelectedLocation({ lat: lat, lng: lng });
+    const { latitude, longitude } = event.nativeEvent.coordinate;
+    setSelectedLocation({ lat: latitude, lng: longitude });
+    console.log('Location selected:', latitude, longitude);
   }
 
+  const savePickedLocationHandler = useCallback(() => {
+    if (!selectedLocation) {
+      Alert.alert(
+        'No location picked!',
+        'You have to pick a location first!'
+      );
+      return;
+    }
+    console.log('Saving location:', selectedLocation);
+    router.push({
+      pathname: '/(screens)/AddPlace',
+      params: {
+        latitude: selectedLocation.lat,
+        longitude: selectedLocation.lng,
+      },
+    });
+  }, [selectedLocation]);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: ({ tintColor }: any) => (
+        <IconButton
+          icon="save"
+          size={24}
+          color={tintColor}
+          onPress={savePickedLocationHandler}
+        />
+      ),
+    });
+  }, [navigation, savePickedLocationHandler]);
+
   return (
-    <MapView style={styles.map} initialRegion={region} onPress={selectLocationHandler} >
+    <MapView
+      style={styles.map}
+      initialRegion={region}
+      onPress={selectLocationHandler}
+    >
       {selectedLocation && (
         <Marker
           title="Picked Location"
-          coordinate={{ 
-            latitude: selectedLocation.lat, 
-            longitude: selectedLocation.lng 
+          coordinate={{
+            latitude: selectedLocation.lat,
+            longitude: selectedLocation.lng,
           }}
         />
       )}
