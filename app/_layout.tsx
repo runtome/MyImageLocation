@@ -47,6 +47,12 @@ export default function RootLayout() {
             title: 'Add New Place' 
           }} 
         />
+        <Stack.Screen 
+          name="(screens)/MapView" 
+          options={{ 
+            title: 'Map' 
+          }} 
+        />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>
