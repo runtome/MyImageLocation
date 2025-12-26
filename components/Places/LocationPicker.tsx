@@ -3,6 +3,7 @@ import {
   PermissionStatus,
   useForegroundPermissions,
 } from "expo-location";
+import { router } from "expo-router";
 import { useState } from "react";
 import {
   Alert,
@@ -55,7 +56,9 @@ export default function LocationPicker() {
     });
   }
 
-  function pickOnMapHandler() {}
+  function pickOnMapHandler() {
+    router.push('/(screens)/MapView');
+  }
 
   let imagePreview = <Text>No location chosen yet!</Text>;
   if (pickedLocation) {
