@@ -1,11 +1,13 @@
 import IconButton from '@/components/ui/IconButton';
-import { router, useNavigation } from 'expo-router';
+import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { useCallback, useLayoutEffect, useState } from 'react';
 import { Alert, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
 export default function MapScreen() {
   const navigation = useNavigation();
+  const params = useLocalSearchParams();
+
   const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number }>();
 
   const region = {
@@ -18,7 +20,6 @@ export default function MapScreen() {
   function selectLocationHandler(event: any) {
     const { latitude, longitude } = event.nativeEvent.coordinate;
     setSelectedLocation({ lat: latitude, lng: longitude });
-    console.log('Location selected:', latitude, longitude);
   }
 
   const savePickedLocationHandler = useCallback(() => {
@@ -29,14 +30,15 @@ export default function MapScreen() {
       );
       return;
     }
-    console.log('Saving location:', selectedLocation);
-    router.push({
-      pathname: '/(screens)/AddPlace',
-      params: {
-        latitude: selectedLocation.lat,
-        longitude: selectedLocation.lng,
-      },
+
+    // 🔥 Update params of previous screen
+    router.setParams({
+      latitude: selectedLocation.lat.toString(),
+      longitude: selectedLocation.lng.toString(),
     });
+
+    // 🔥 Go back instead of push
+    router.back();
   }, [selectedLocation]);
 
   useLayoutEffect(() => {
@@ -60,7 +62,6 @@ export default function MapScreen() {
     >
       {selectedLocation && (
         <Marker
-          title="Picked Location"
           coordinate={{
             latitude: selectedLocation.lat,
             longitude: selectedLocation.lng,
@@ -72,7 +73,5 @@ export default function MapScreen() {
 }
 
 const styles = StyleSheet.create({
-  map: {
-    flex: 1,
-  },
+  map: { flex: 1 },
 });

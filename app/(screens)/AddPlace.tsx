@@ -12,5 +12,5 @@ export default function AddPlace() {
 
   console.log('Received coordinates in AddPlace:', lat, lng);
 
-  return <PlaceForm latitude={lat} longitude={lng} />;
+  return <PlaceForm />;
 }

@@ -4,7 +4,7 @@ import {
   useForegroundPermissions,
 } from "expo-location";
 import { router } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Alert,
   Image,
@@ -17,7 +17,11 @@ import { Colors } from "@/constants/colors";
 import getMapPreview from "@/util/location";
 import OutlineButton from "../ui/OutlineButton";
 
-export default function LocationPicker() {
+interface LocationPickerProps {
+  onPickLocation: (lat: number, lng: number) => void;
+}
+
+export default function LocationPicker({onPickLocation}: LocationPickerProps) {
   const [pickedLocation, setPickedLocation] = useState<{ lat: number; lng: number } | null>(null);
 
   const [permissionInfo, requestPermission] = useForegroundPermissions();
@@ -38,6 +42,12 @@ export default function LocationPicker() {
 
     return true;
   }
+
+  useEffect(() => {
+    if (pickedLocation) {
+      onPickLocation(pickedLocation.lat, pickedLocation.lng);
+    }
+  }, [pickedLocation, onPickLocation]);
 
   async function getLocationHandler() {
     const hasPermission = await verifyPermissions();
